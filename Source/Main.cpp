@@ -36,7 +36,7 @@
  {
      DemoTaskbarComponent()
      {
-         setIconImage (getImageFromAssets ("juce_icon.png"),
+         setIconImage (getImageFromAssets ("logo32.ico"),
                        getImageFromAssets ("juce_icon_template.png"));
          setIconTooltip ("JUCE demo runner!");
      }
