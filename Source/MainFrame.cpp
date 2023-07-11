@@ -9,7 +9,8 @@ MainFrame::MainFrame(const String& name)
 {
    setUsingNativeTitleBar(true);
    setResizable(true, false);
-   setResizeLimits(500, 400, 10000, 10000);
+   //setResizeLimits(500, 400, 10000, 10000);
+   setIcon(ImageCache::getFromFile(File("C:/Andrey/logop128.ico")));
    //
    //setContentOwned (new MainComponent(), false);
    setVisible(true);
@@ -19,5 +20,6 @@ MainFrame::MainFrame(const String& name)
    //Image img = ImageCache::getFromFile(File("../Source/logo32.ico"));
    //icon = new SystemTrayIconComponent();
    setContentOwned(MC, true);
+   setFullScreen(true);
 
 }

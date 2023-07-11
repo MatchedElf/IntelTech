@@ -26,12 +26,38 @@ MainComponent::MainComponent(void) : Component("MainComponent"), MainLabel(0), p
     addAndMakeVisible(front);
     front->setButtonText(">>");
     front->addListener(this);
-    //file1 = new File("../Source/Videoo.mp4");
-    //vid = new VideoComponent(true);
-    //vid->load(f1);
     //
+    pop = new TextButton("Popup menu");
+    addAndMakeVisible(pop);
+    pop->setButtonText("...");
+    pop->addMouseListener(this, false);
+    //
+    menu = new PopupMenu();
+    menu->addItem(PopupMenu::Item("Item"));
+    //
+    logo = new ImageComponent("Play image");
+    addAndMakeVisible(logo);
+    logo->setImage(ImageCache::getFromFile(File("C:/Andrey/logop.png")));
+    //
+    chFile = new TextButton("Choose file");
+    addAndMakeVisible(chFile);
+    chFile->setButtonText("+");
+    chFile->addListener(this);
+    // 
+    vid = new VideoComponent(false);
+    addAndMakeVisible(vid);
+    f1 = new File("C:/Andrey/Videoo.mp4");
+    check = f1->exists();
+    auto url = URL(*f1);
+    auto result = vid->load(url);
+    //
+    slid = new Slider("Slider");
+    addAndMakeVisible(slid);
+
     setSize(500, 500);
-    
+    myLayout = new StretchableLayoutManager();
+    myLayout->setItemLayout(0, 10, 100, 50);
+    myLayout->setItemLayout(1, 10, 100, 50);
 }
 //
 MainComponent::~MainComponent(void)
@@ -41,22 +67,43 @@ MainComponent::~MainComponent(void)
     deleteAndZero(back);
     deleteAndZero(front);
     deleteAndZero(title);
-    //deleteAndZero(vid);
-    //delete(file1);
+    deleteAndZero(menu);
+    deleteAndZero(logo);
+    deleteAndZero(vid);
+    deleteAndZero(pop);
+    deleteAndZero(chFile);
+    deleteAndZero(myLayout);
+    deleteAndZero(slid);
+    delete(f1);
 }
 //
 void MainComponent::paint(Graphics& g)
 {
     g.fillAll(Colour::fromRGB(0, 3, 71));
+    ColourGradient bg(Colour::fromRGB(198, 89, 28), 0.0, 0.0, Colour::fromRGB(0, 3, 71), 300.0, 300.0, false);
+    //bg.vertical(Colour::fromRGB(198, 89, 28), 0.0, Colour::fromRGB(0, 3, 71), 1.0);
+    //bg.addColour(1.0, Colour::fromRGB(198, 89, 28));
+    bg = ColourGradient::vertical(Colour::fromRGB(198, 89, 28), -250.0, Colour::fromRGB(0, 3, 71), 500.0);
+    g.setGradientFill(bg);
+    g.fillAll();
 }
 //
 void MainComponent::resized(void)
 {
-    MainLabel->setBounds(getWidth() / 2 - 50, getHeight() / 2 - 150, 100, 100);
+    Component* comps[]{play, back};
+    if(check == true) title->setText("true", dontSendNotification);
+    else if(check == false) title->setText("false", dontSendNotification);
+    //MainLabel->setBounds(getWidth() / 2 - 50, getHeight() / 2 - 150, 100, 100);
+    chFile->setBounds(getWidth() / 2 - 250, 100, 50, 50);
     play->setBounds(getWidth() / 2 - 25, getHeight() / 2 + 150, 50, 50);
     back->setBounds(getWidth() / 2 - 75, getHeight() / 2 + 150, 50, 50);
     front->setBounds(getWidth() / 2 + 25, getHeight() / 2 + 150, 50, 50);
     title->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 150, 100, 50);
+    logo->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
+    pop->setBounds(getWidth() / 2 + 125, getHeight() / 2 + 150, 50, 50);
+    slid->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 150, 50);
+    vid->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
+    //myLayout->layOutComponents(comps, 2, 150, 350, getWidth(), getHeight(), false, true);
 }
 //
 void MainComponent::buttonClicked(Button* butt)
@@ -67,8 +114,24 @@ void MainComponent::buttonClicked(Button* butt)
     else if (butt == back) {
         MainLabel->setColour(Label::textColourId, juce::Colours::white);
     }
-    else {
+    else if(butt == front){
         MainLabel->setColour(Label::textColourId, juce::Colours::red);
 
     }
+    else if (butt == chFile) {
+
+    }
+}
+
+void MainComponent::mouseDown(const MouseEvent& event)
+{
+    MainLabel->setColour(Label::textColourId, juce::Colours::white);
+    PopupMenu menu1;
+    menu1.addItem(PopupMenu::Item("Item"));
+    menu1.addItem(PopupMenu::Item("Item2"));
+    menu1.showMenuAsync(PopupMenu::Options().withMinimumWidth(100)
+        .withMaximumNumColumns(3)
+        .withPreferredPopupDirection(PopupMenu::Options::PopupDirection(0))
+        .withTargetComponent(pop));
+
 }
