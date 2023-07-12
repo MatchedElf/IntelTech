@@ -37,7 +37,7 @@ MainComponent::MainComponent(void) : Component("MainComponent"), MainLabel(0), p
     //
     logo = new ImageComponent("Play image");
     addAndMakeVisible(logo);
-    logo->setImage(ImageCache::getFromFile(File("C:/Andrey/logop.png")));
+    logo->setImage(ImageCache::getFromFile(File::getCurrentWorkingDirectory().getChildFile("logop.png")));
     //
     chFile = new TextButton("Choose file");
     addAndMakeVisible(chFile);
@@ -46,9 +46,9 @@ MainComponent::MainComponent(void) : Component("MainComponent"), MainLabel(0), p
     // 
     vid = new VideoComponent(false);
     addAndMakeVisible(vid);
-    f1 = new File("C:/Andrey/Videoo.mp4");
-    check = f1->exists();
-    auto url = URL(*f1);
+    f1 = File::getCurrentWorkingDirectory().getChildFile("Videoo.mp4");
+    check = f1.exists();
+    auto url = URL(f1);
     auto result = vid->load(url);
     //
     slid = new Slider("Slider");
@@ -74,7 +74,6 @@ MainComponent::~MainComponent(void)
     deleteAndZero(chFile);
     deleteAndZero(myLayout);
     deleteAndZero(slid);
-    delete(f1);
 }
 //
 void MainComponent::paint(Graphics& g)
@@ -102,7 +101,7 @@ void MainComponent::resized(void)
     logo->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
     pop->setBounds(getWidth() / 2 + 125, getHeight() / 2 + 150, 50, 50);
     slid->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 150, 50);
-    vid->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
+    //vid->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
     //myLayout->layOutComponents(comps, 2, 150, 350, getWidth(), getHeight(), false, true);
 }
 //

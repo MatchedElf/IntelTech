@@ -10,7 +10,7 @@ MainFrame::MainFrame(const String& name)
    setUsingNativeTitleBar(true);
    setResizable(true, false);
    //setResizeLimits(500, 400, 10000, 10000);
-   setIcon(ImageCache::getFromFile(File("C:/Andrey/logop128.ico")));
+   setIcon(ImageCache::getFromFile(File::getCurrentWorkingDirectory().getChildFile("logop128.ico")));
    //
    //setContentOwned (new MainComponent(), false);
    setVisible(true);
