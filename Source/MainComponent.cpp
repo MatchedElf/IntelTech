@@ -49,9 +49,11 @@ MainComponent::MainComponent(void) : Component("MainComponent"), MainLabel(0), p
     f1 = File::getCurrentWorkingDirectory().getChildFile("Videoo.mp4");
     check = f1.exists();
     auto url = URL(f1);
-    auto result = vid->load(url);
+    //auto result = vid->load(url);
     //
-    slid = new Slider("Slider");
+    slid = new Slider(Slider::LinearHorizontal, Slider::TextBoxLeft);
+    slid->setTextBoxStyle(Slider::TextBoxLeft, true, 50, 20);
+    slid->setNumDecimalPlacesToDisplay(0);
     addAndMakeVisible(slid);
 
     setSize(500, 500);
@@ -100,8 +102,8 @@ void MainComponent::resized(void)
     title->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 150, 100, 50);
     logo->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
     pop->setBounds(getWidth() / 2 + 125, getHeight() / 2 + 150, 50, 50);
-    slid->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 150, 50);
-    //vid->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
+    slid->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 375, 50);
+    vid->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
     //myLayout->layOutComponents(comps, 2, 150, 350, getWidth(), getHeight(), false, true);
 }
 //
