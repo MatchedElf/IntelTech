@@ -25,7 +25,7 @@ private:
     VideoComponent* vid;
     PopupMenu* menu;
     ImageComponent* logo;
-    File* f1;
+    File f1;
     StretchableLayoutManager* myLayout;
     Slider* slid;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
