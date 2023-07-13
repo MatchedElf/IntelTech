@@ -44,11 +44,11 @@ MainComponent::MainComponent(void) : Component("MainComponent"), MainLabel(0), p
     chFile->setButtonText("+");
     chFile->addListener(this);
     // 
-    vid = new VideoComponent(false);
+    vid = new VideoComponent(true);
     addAndMakeVisible(vid);
     f1 = File::getCurrentWorkingDirectory().getChildFile("Videoo.mp4");
     check = f1.exists();
-    auto url = URL(f1);
+    //auto url = URL(f1);
     //auto result = vid->load(url);
     //
     slid = new Slider(Slider::LinearHorizontal, Slider::TextBoxLeft);
@@ -76,6 +76,7 @@ MainComponent::~MainComponent(void)
     deleteAndZero(chFile);
     deleteAndZero(myLayout);
     deleteAndZero(slid);
+    myChooser.reset();
 }
 //
 void MainComponent::paint(Graphics& g)
@@ -120,7 +121,7 @@ void MainComponent::buttonClicked(Button* butt)
 
     }
     else if (butt == chFile) {
-
+        loadFile();
     }
 }
 
@@ -134,5 +135,37 @@ void MainComponent::mouseDown(const MouseEvent& event)
         .withMaximumNumColumns(3)
         .withPreferredPopupDirection(PopupMenu::Options::PopupDirection(0))
         .withTargetComponent(pop));
-
 }
+
+void MainComponent::VideoProcessing(const URL& url, Result result)
+{
+    if (result.wasOk()) {
+        vid->play();
+        resized();
+    }
+    else {
+        AlertWindow::showMessageBoxAsync(MessageBoxIconType::WarningIcon, "Couldn't load the file!", result.getErrorMessage());
+    }
+}
+
+
+void MainComponent::loadFile()
+{
+    myChooser = std::make_unique<FileChooser>("Please select the moose you want to load...",
+        File::getSpecialLocation(File::userHomeDirectory),
+        "*.mp4");
+
+    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles;
+
+    myChooser->launchAsync(folderChooserFlags, [this](const FileChooser& chooser)
+    {
+        File choosedFile(chooser.getResult());
+        title->setText(choosedFile.getFileName(), dontSendNotification);
+
+        //loadMoose(mooseFile);
+        auto url = URL(choosedFile);
+        auto result = vid->load(url);
+        VideoProcessing(url, result);
+    });
+}
+
