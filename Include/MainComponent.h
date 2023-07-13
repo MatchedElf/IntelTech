@@ -12,8 +12,11 @@ public:
     void resized(void) override;
     void buttonClicked(Button*) override;
     void mouseDown(const MouseEvent& event);
+    void VideoProcessing(const URL& url, Result result);
+    void loadFile();
     //
 private:
+    std::unique_ptr<FileChooser> myChooser;
     bool check;
     Label* MainLabel;
     Label* title;
@@ -26,6 +29,7 @@ private:
     PopupMenu* menu;
     ImageComponent* logo;
     File f1;
+    File ObtainedFile;
     StretchableLayoutManager* myLayout;
     Slider* slid;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
