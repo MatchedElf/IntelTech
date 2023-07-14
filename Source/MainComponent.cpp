@@ -92,12 +92,15 @@ void MainComponent::paint(Graphics& g)
 //
 void MainComponent::resized(void)
 {
+    int propW = proportionOfWidth(0.1);
+    int propH = proportionOfHeight(0.1);
+
     Component* comps[]{play, back};
     if(check == true) title->setText("true", dontSendNotification);
     else if(check == false) title->setText("false", dontSendNotification);
     //MainLabel->setBounds(getWidth() / 2 - 50, getHeight() / 2 - 150, 100, 100);
     chFile->setBounds(getWidth() / 2 - 250, 100, 50, 50);
-    play->setBounds(getWidth() / 2 - 25, getHeight() / 2 + 150, 50, 50);
+    play->setBounds(getWidth() / 2 - 25, getHeight() / 2 + 150, propW, propH);
     back->setBounds(getWidth() / 2 - 75, getHeight() / 2 + 150, 50, 50);
     front->setBounds(getWidth() / 2 + 25, getHeight() / 2 + 150, 50, 50);
     title->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 150, 100, 50);
@@ -105,7 +108,7 @@ void MainComponent::resized(void)
     pop->setBounds(getWidth() / 2 + 125, getHeight() / 2 + 150, 50, 50);
     slid->setBounds(getWidth() / 2 - 250, getHeight() / 2 + 100, 375, 50);
     vid->setBounds(getWidth() / 2 - 100, getHeight() / 2 - 150, 200, 200);
-    //myLayout->layOutComponents(comps, 2, 150, 350, getWidth(), getHeight(), false, true);
+    //myLayout->layOutComponents(comps, 2, 150, 350, getWidth(), getHeight(), false, false);
 }
 //
 void MainComponent::buttonClicked(Button* butt)
