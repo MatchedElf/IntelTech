@@ -25,6 +25,7 @@ private:
     Label* MainLabel;
     Label* title;
     TextButton* play;
+    ImageButton* play1;
     TextButton* back;
     TextButton* front;
     TextButton* pop;
