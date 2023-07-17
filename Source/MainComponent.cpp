@@ -18,6 +18,9 @@ MainComponent::MainComponent(void) : Component("MainComponent"), MainLabel(0), p
     play->addListener(this);
     play->setEnabled(false);
     //
+    play1 = new ImageButton("Play button");
+
+    //
     back = new TextButton("back button");
     addAndMakeVisible(back);
     back->setButtonText("<<");
@@ -107,6 +110,7 @@ MainComponent::~MainComponent(void)
     deleteAndZero(vol);
     deleteAndZero(speed);
     myChooser.reset();
+    queue.clear();
 }
 //
 void MainComponent::paint(Graphics& g)
@@ -172,11 +176,13 @@ void MainComponent::buttonClicked(Button* butt)
         curI--;
         title->setText(queue[curI].getFileName(), dontSendNotification);
         vid->load(queue[curI]);
+        VideoProcessing();
     }
     else if((butt == front) && (curI < (queue.size() - 1) ) ){
         curI++;
         title->setText(queue[curI].getFileName(), dontSendNotification);
         vid->load(queue[curI]);
+        VideoProcessing();
 
     }
     else if (butt == chFile) {
